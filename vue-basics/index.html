@@ -6,6 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vue</title>
     <script src="https://unpkg.com/vue@3.0.2"></script>
+    <style>
+      .box {
+        padding: 100px 0;
+        width: 400px;
+        background-color: #ddd;
+        text-align: center;
+        margin: 20px;
+        display: inline-block;
+      }
+    </style>
   </head>
   <body>
     <h1>Hello Vue</h1>
@@ -29,8 +39,18 @@
       </button>
       <!-- v-ifはDOMを完全に削除、v-showはdisplay:noneという違いがある -->
       <div v-show="showBooks">currently showing books</div>
+
+      <br>
+      <!-- mouse events -->
+      <!-- 引数を渡さない場合 -->
+      <div class="box" v-on:mouseover="handleEvent">mouseover (enter)</div>
+      <!-- 引数を渡す場合 -->
+      <div class="box" @mouseleave="handleEvent($event, 5)">mouseleave</div>
+      <div class="box" @dblclick="handleEvent">double click</div>
+      <div class="box" @mousemove="handleMousemove">mouse move <br>position - x:{{ x }}, y {{ y }}</div>
     </div>
 
     <script src="app.js"></script>
   </body>
 </html>
+
