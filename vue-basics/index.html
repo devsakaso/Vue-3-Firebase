@@ -7,14 +7,41 @@
     <title>Vue</title>
     <script src="https://unpkg.com/vue@3.0.2"></script>
     <style>
+      body {
+        background-color: #eee;
+        max-width: 960px;
+        margin: 20px auto;
+      }
+      p,h3,ul {
+        margin: 0;
+        padding: 0;
+      }
+      li {
+        list-style-type: none;
+        background-color: #fff;
+        margin: 20px auto;
+        padding: 10px 20px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      li.fav {
+        background-color: teal;
+
+      }
       .box {
         padding: 100px 0;
-        width: 400px;
+        width: 200px;
         background-color: #ddd;
         text-align: center;
         margin: 20px;
         display: inline-block;
       }
+      .bg-red {
+        background-color: red;
+      }
+      
     </style>
   </head>
   <body>
@@ -40,17 +67,46 @@
       <!-- v-ifはDOMを完全に削除、v-showはdisplay:noneという違いがある -->
       <div v-show="showBooks">currently showing books</div>
 
-      <br>
+      <br />
       <!-- mouse events -->
       <!-- 引数を渡さない場合 -->
       <div class="box" v-on:mouseover="handleEvent">mouseover (enter)</div>
       <!-- 引数を渡す場合 -->
       <div class="box" @mouseleave="handleEvent($event, 5)">mouseleave</div>
       <div class="box" @dblclick="handleEvent">double click</div>
-      <div class="box" @mousemove="handleMousemove">mouse move <br>position - x:{{ x }}, y {{ y }}</div>
+      <div class="box" @mousemove="handleMousemove">
+        mouse move <br />position - x:{{ x }}, y {{ y }}
+      </div>
+
+      <br />
+
+      <!-- v-for -->
+      <ul>
+        <!-- Dynamic classes -->
+        <!-- isFavがtrueのbookにfavクラスを付与 -->
+        <!-- bookを関数に渡すことでdataにアクセス可能 -->
+        <!-- <li v-for="book in books" v-bind:class="{ fav: book.isFav}" @click="toggleFav(book)"> -->
+        <li v-for="book in filteredBooks" v-bind:class="{ fav: book.isFav}" @click="toggleFav(book)">
+          <img v-bind:src="book.img" alt="book.title">
+          <h3>{{book.title}}</h3>
+          <p>{{book.author}}</p>
+        </li>
+      </ul>
+      <!-- v-forなし -->
+      <ul>
+        <li>{{books[0].title}} - {{ books[0].author }}</li>
+        <li>{{books[1].title}} - {{ books[1].author }}</li>
+        <li>{{books[2].title}} - {{ books[2].author }}</li>
+      </ul>
+
+      <!-- attribute binding v-bind :-->
+      <!-- <a href="url"></a> これはurlと表示されてしまう-->
+      <!-- <a href="{{ url }}"></a> これは{{ url }}と表示されてしまう-->
+      <a v-bind:href="url">ホームページ</a><br>
+      <a :href="url">ホームページ</a><br>
+
     </div>
 
     <script src="app.js"></script>
   </body>
 </html>
-
