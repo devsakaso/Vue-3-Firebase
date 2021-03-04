@@ -1,19 +1,25 @@
 <template>
-  <!-- App.vue root component -->
-  <h1>{{ title }}</h1>
+  <!-- こちらをテレポートさせる -->
   <div v-if="showModal">
-    <!-- // 親コンポーネントでは、closeが発動したらどうしたいのかを書く。
-    今回の場合modalを閉じたいのでtoggleModalを渡す -->
-    <!-- イベントが伝搬しているので背景をクリックしてもその子要素をクリックしてもmodalが反応するので、Event Modifierを設定する -->
-    <Modal :header="header" :text="text" theme="sale" @close="toggleModal" />
+    <Modal theme="sale" @close="toggleModal">
+      <template v-slot:links>
+        <a href="#">サインイン</a>
+        <a href="#">もっと詳しく</a>
+      </template>
+      <h1>タイトル</h1>
+      <p>サブタイトル</p>
+    </Modal>
   </div>
-  <!-- Event Modifierの設定方法
-  @clickの後に.rightの形で続ける。
-  .rightは右クリックしたら、.shiftはshiftキープラスクリックしたら -->
+  <!-- こちらは通常通り#appに出力する -->
+  <div v-if="showModalTwo">
+    <Modal @close="toggleModalTwo">
+      <p>これが作成したボタン２</p>
+      <h1>タイトル</h1>
+      <p>サブタイトル</p>
+    </Modal>
+  </div>
   <button @click.shift="toggleModal">Open Modal(shift)</button>
-  <hr />
-  <input type="text" ref="name" />
-  <button @click="handleClick">click me</button>
+  <button @click.alt="toggleModalTwo">Open ModalTwo(alt)</button>
 </template>
 
 <script>
@@ -27,7 +33,8 @@ export default {
       title: 'My First Vue App',
       header: 'ヘッダー部分',
       text: 'ここにテキスト',
-      showModal: false
+      showModal: false,
+      showModalTwo: false
     };
   },
   methods: {
@@ -38,6 +45,9 @@ export default {
     },
     toggleModal() {
       this.showModal = !this.showModal;
+    },
+    toggleModalTwo() {
+      this.showModalTwo = !this.showModalTwo;
     }
   }
 };
