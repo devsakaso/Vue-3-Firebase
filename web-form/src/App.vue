@@ -1,15 +1,15 @@
-<template>
-
+<template> 
+  <SignupFrom/>
+  
 </template>
 
 <script>
+import SignupFrom from './components/SignupForm';
 
 export default {
   name: 'App',
-  components: {
-
-  }
-}
+  components: { SignupFrom }
+};
 </script>
 
 <style>
